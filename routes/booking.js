@@ -25,6 +25,7 @@ router.post('/create', async (req, res) => {
 
 	const message = {
 		to: req.body.email,
+		cc: 'info@itspro.by',
 		subject: 'Бронь апартаментов в Booking App',
 		html: `
 		<h2>Поздравляю, Вы успешно забронировали апартаменты в Booking App!</h2>
