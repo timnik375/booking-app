@@ -1,0 +1,39 @@
+
+<div data-app="calendar-app">
+
+</div>
+<div class="booking_menu">
+	<form action="/create" method="post">
+		<div class="book_dates">
+			<div class="book_date_start _req">Выберите дату заселения</div>
+			<span class="close"></span>
+		</div>
+		<div class="book_dates">
+			<div class="book_date_finish _req">Выберите дату выселения</div>
+			<span class="close"></span>
+		</div>
+		<div class="final_price _req" name="sum">0 BYN</div>
+		<div class="__select" data-state="">
+			<div class="__select__title" data-default="Option 0">Выберите время заселения</div>
+			<div class="__select__content">
+				<input id="singleSelect0" class="__select__input" type="radio" name="time"/>
+				<label for="singleSelect0" class="__select__label">Выберите время заселения</label>
+				<input id="singleSelect1" class="__select__input" type="radio" name="time"
+					   value="10:00"/>
+				<label for="singleSelect1" class="__select__label">10:00</label>
+				<input id="singleSelect2" class="__select__input" type="radio" name="time"
+					   value="12:00" />
+				<label for="singleSelect2" class="__select__label">12:00</label>
+				<input id="singleSelect3" class="__select__input" type="radio" name="time"
+					   value="14:00"/>
+				<label for="singleSelect3" class="__select__label">14:00</label>
+			</div>
+		</div>
+		<input id="name" class="name_input _req" type="text" name="name" placeholder="Введите ваше имя" />
+		<input id="email" class="email_input _req" type="email" name="email" placeholder="Введите ваш email"/>
+		<input id="date" type="hidden" name="date">
+		<input id="subject" type="hidden" name="subject">
+		<input id="message" type="hidden" name="body">
+		<button id="submit_btn" class="submit_input" type="submit" name="submit_btn"/>Отправить заявку</button>
+	</form>
+</div>
