@@ -170,6 +170,7 @@ document.addEventListener('click', function(e) {
 	let nums = document.querySelectorAll('.current');
 	let priceFinal = document.querySelector('.final_price');
 	let startDateCalendar = document.querySelector('.start');
+	let finishDateCalendar = document.querySelector('.finish');
 
 	if (e.target.classList.contains('current') && !e.target.classList.contains('range')) {
 
@@ -177,12 +178,23 @@ document.addEventListener('click', function(e) {
 			let today = new Date();
 			let userStart = new Date(`${e.target.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`);
 			if (today <= userStart){
-				_addBookStart(nums, e.target);
+				if (document.querySelectorAll('.finish').length) {
+					let userFinish = new Date(`${finishDateCalendar.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`);
+					if (userStart < userFinish) {
+						_addBookStart(nums, e.target);
+						_addBookRange(nums);
+					}
+				} else {
+					_addBookStart(nums, e.target);
+					_addBookRange(nums);
+				}
+
 			} else {
 				console.log('Смотри другую дату')
 			}
 
 		} else {
+			let today = new Date();
 			let userStart = startDateCalendar !== null ? new Date(`${startDateCalendar.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`) : new Date(`${startDateBookDisplay.innerText.split('/').reverse().join('-')}T14:00:00.000`);
 			if (!e.target.classList.contains('start')) {
 				let userFinish = new Date(`${e.target.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`);
@@ -190,10 +202,11 @@ document.addEventListener('click', function(e) {
 					nums.forEach(elem => elem.classList.remove('finish'));
 					_addBookFinish(nums, e.target);
 				} else if (userStart > userFinish) {
-					_addBookStart(nums, e.target);
+					if (today < userFinish) {
+						_addBookStart(nums, e.target);
 
-					_addBookRange(nums);
-
+						_addBookRange(nums);
+					}
 				} else {
 					console.log('Смотри другую дату')
 				}
