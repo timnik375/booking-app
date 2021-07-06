@@ -65,12 +65,16 @@ function datesForGrid(year, month) {
 	for(let i = 1; i <= firstDay; i++) {
 		let prevMonthDate = totalDaysInPrevMonth - firstDay + i;
 		let key = new Date(state.year, state.month -1, prevMonthDate).toLocaleString('en-US');
+		key[2] = '/';
+		key[3] = '/';
 		dates.push({key: key, date: prevMonthDate, monthClass:'prev'});
 	}
 
 	let today = new Date();
 	for(let i = 1; i <= totalDaysInMonth; i++) {
 		let key = new Date(state.year, state.month, i).toLocaleString();
+		key[2] = '/';
+		key[3] = '/';
 		let date = new Date(state.year, state.month, i);
 		if(i === today.getDate() && state.month === today.getMonth() && state.year === today.getFullYear()) {
 			if (date.getDay() === 6 || date.getDay() === 0) {
@@ -92,6 +96,8 @@ function datesForGrid(year, month) {
 		let count = gridSize - dates.length;
 		for(let i = 1; i <= count; i++) {
 			let key = new Date(state.year, state.month + 1, i).toLocaleString();
+			key[2] = '/';
+			key[3] = '/';
 			dates.push({key: key, date: i, monthClass:'next'});
 		}
 	}
