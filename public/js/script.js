@@ -17,12 +17,12 @@ function _addBookStart(daysCurrentMonthArray, target) {
 	target.classList.add('start');
 	target.classList.add('fp');
 
-	document.querySelector('.book_date_start').innerHTML = target.id.substr(0,10);
+	document.querySelector('.book_date_start').innerText = target.id.substr(0,10);
 }
 
 function _addBookFinish(daysCurrentMonthArray, target) {
 	target.classList.add('finish');
-	document.querySelector('.book_date_finish').innerHTML = target.id.substr(0,10);
+	document.querySelector('.book_date_finish').innerText = target.id.substr(0,10);
 
 	_addBookRange(daysCurrentMonthArray)
 }
@@ -30,8 +30,8 @@ function _addBookFinish(daysCurrentMonthArray, target) {
 function _addBookRange(daysCurrentMonthArray) {
 	daysCurrentMonthArray.forEach((elem, index) => {
 
-		if (index + 1 > parseInt(document.querySelector('.book_date_start').innerHTML.substr(0,2))) {
-			if(index + 1 < parseInt(document.querySelector('.book_date_finish').innerHTML.substr(0,2))) {
+		if (index + 1 > parseInt(document.querySelector('.book_date_start').innerText.substr(0,2))) {
+			if(index + 1 < parseInt(document.querySelector('.book_date_finish').innerText.substr(0,2))) {
 				elem.classList.add('range');
 				elem.classList.add('fp');
 			}
@@ -45,11 +45,11 @@ function _getBookPrice(priceFinal) {
 		let numFP = 0;
 
 		datesFP.forEach((elem) => {
-			numFP += parseFloat(elem.nextSibling.innerHTML);
+			numFP += parseFloat(elem.nextSibling.innerText);
 		})
 
 		if (!isNaN(numFP)) {
-			priceFinal.innerHTML = `${numFP} BYN`;
+			priceFinal.innerText = `${numFP} BYN`;
 		}
 	}
 }
@@ -64,7 +64,8 @@ function datesForGrid(year, month) {
 
 	for(let i = 1; i <= firstDay; i++) {
 		let prevMonthDate = totalDaysInPrevMonth - firstDay + i;
-		let key = new Date(state.year, state.month -1, prevMonthDate).toLocaleString();dates.push({key: key, date: prevMonthDate, monthClass:'prev'});
+		let key = new Date(state.year, state.month -1, prevMonthDate).toLocaleString();
+		dates.push({key: key, date: prevMonthDate, monthClass:'prev'});
 	}
 
 	let today = new Date();
@@ -148,10 +149,10 @@ document.addEventListener('click', function(e) {
 	}
 
 	// if (e.target.classList.contains('next')) {
-	// 	dayUser = e.target.innerHTML
+	// 	dayUser = e.target.innerText
 	// 	showCalendar(1);
 	// 	for (let i = 0; i < numCur.length; i++) {
-	// 		if (numCur[i].innerHTML === dayUser) {
+	// 		if (numCur[i].innerText === dayUser) {
 	// 			numCur[i].classList.add('start');
 	// 			i = numCur.length;
 	// 		}
@@ -166,18 +167,9 @@ document.addEventListener('click', function(e) {
 
 	if (e.target.classList.contains('current') && !e.target.classList.contains('range')) {
 
-		if (startDateBookDisplay.innerHTML === 'Выберите дату заселения') {
+		if (startDateBookDisplay.innerText === 'Выберите дату заселения') {
 			let today = new Date();
-			// let arrTemp = e.target.id.substr(0,10).split('/');
-			let userStart = new Date(`${e.target.id.substr(0,10).split('/').reverse().join('-')}, 14:00:00`);
-			// let userStart = new Date(arrTemp[2], arrTemp[0], arrTemp[1])
-
-			// console.log(arrTemp)
-
-			// console.log(e.target.id.substr(0,9).split('/').reverse().join('-'))
-			// console.log(new Date(2016, 2, 26, 14, 0, 0))
-			// console.log('userStart: ' + userStart);
-
+			let userStart = new Date(`${e.target.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`);
 			if (today <= userStart){
 				_addBookStart(nums, e.target);
 			} else {
@@ -185,7 +177,7 @@ document.addEventListener('click', function(e) {
 			}
 
 		} else {
-			let userStart = startDateCalendar !== null ? new Date(`${startDateCalendar.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`) : new Date(`${startDateBookDisplay.innerHTML.split('/').reverse().join('-')}T14:00:00.000`);
+			let userStart = startDateCalendar !== null ? new Date(`${startDateCalendar.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`) : new Date(`${startDateBookDisplay.innerText.split('/').reverse().join('-')}T14:00:00.000`);
 			if (!e.target.classList.contains('start')) {
 				let userFinish = new Date(`${e.target.id.substr(0,10).split('/').reverse().join('-')}T14:00:00.000`);
 				if (userStart <= userFinish){
@@ -221,7 +213,7 @@ document.addEventListener('click', function(e) {
 		if (e.target.previousElementSibling.classList.contains('book_date_start')) {
 			nums.forEach(elem => elem.classList.remove('start'));
 
-			e.target.previousElementSibling.innerHTML = 'Выберите дату заселения'
+			e.target.previousElementSibling.innerText = 'Выберите дату заселения'
 
 			nums.forEach(elem => elem.classList.remove('range'));
 
@@ -233,7 +225,7 @@ document.addEventListener('click', function(e) {
 		}
 
 		if (e.target.previousElementSibling.classList.contains('book_date_finish')) {
-			e.target.previousElementSibling.innerHTML = 'Выберите дату выселения'
+			e.target.previousElementSibling.innerText = 'Выберите дату выселения'
 
 			nums.forEach(elem => {
 				if (!elem.classList.contains('start')) {
@@ -244,7 +236,7 @@ document.addEventListener('click', function(e) {
 			nums.forEach(elem => elem.classList.remove('finish'));
 		}
 
-		priceFinal.innerHTML = '0 BYN';
+		priceFinal.innerText = '0 BYN';
 		finalSum = 0;
 	}
 });
@@ -265,9 +257,9 @@ async function formSend(e) {
 
 		alert('Success!');
 		// form.reset();
-		document.querySelector('.final_price').innerHTML = '0 BYN';
+		document.querySelector('.final_price').innerText = '0 BYN';
 		finalSum = 0;
-		document.querySelector('.__select__title').innerHTML = 'Выберите время заселения';
+		document.querySelector('.__select__title').innerText = 'Выберите время заселения';
 		// render()
 	} else {
 		alert('Заполните все поля')
@@ -287,13 +279,13 @@ function formValidate() {
 				formAddError(input);
 				error++;
 			}
-		} else if (input.classList.contains('final_price') && input.innerHTML === '0 BYN') {
+		} else if (input.classList.contains('final_price') && input.innerText === '0 BYN') {
 			formAddError(input);
 			error++;
-		} else if (input.classList.contains('book_date_start') && input.innerHTML === 'Выберите дату заселения') {
+		} else if (input.classList.contains('book_date_start') && input.innerText === 'Выберите дату заселения') {
 			formAddError(input.parentNode);
 			error++;
-		} else if (input.classList.contains('book_date_finish') && input.innerHTML === 'Выберите дату выселения') {
+		} else if (input.classList.contains('book_date_finish') && input.innerText === 'Выберите дату выселения') {
 			formAddError(input.parentNode);
 			error++;
 		} else {
@@ -304,7 +296,7 @@ function formValidate() {
 		}
 	}
 
-	if (selectSingle_title.innerHTML === 'Выберите время заселения') {
+	if (selectSingle_title.innerText === 'Выберите время заселения') {
 		formAddError(selectSingle)
 		error++
 	}
@@ -348,7 +340,7 @@ selectSingle_title.addEventListener('click', () => {
 			})
 		}
 
-		if (document.querySelector('.book_date_start').innerHTML !== 'Введите дату заселения') {
+		if (document.querySelector('.book_date_start').innerText !== 'Введите дату заселения') {
 			let startDateCalendar = document.querySelector('.start');
 
 			if (parseFloat(startDateCalendar.id.substr(12,2))) {
@@ -361,7 +353,7 @@ selectSingle_title.addEventListener('click', () => {
 
 		}
 
-		if (document.querySelector('.book_date_finish').innerHTML !== 'Выберите дату выселения') {
+		if (document.querySelector('.book_date_finish').innerText !== 'Выберите дату выселения') {
 			let finishDateCalendar = document.querySelector('.finish');
 
 			if (parseFloat(finishDateCalendar.id.substr(12,2))) {
@@ -377,7 +369,7 @@ selectSingle_title.addEventListener('click', () => {
 
 for (let i = 0; i < selectSingle_labels.length; i++) {
 	selectSingle_labels[i].addEventListener('click', (e) => {
-		selectSingle_title.innerHTML = e.target.innerHTML;
+		selectSingle_title.textContent = e.target.textContent;
 		selectSingle.setAttribute('data-state', '');
 	});
 }
@@ -396,7 +388,7 @@ async function getReservations() {
 					if (parseFloat(item.date.substr(3,2)) === parseFloat(elem.id.substr(3,2))) {
 						if (parseFloat(item.date.substr(0,2)) <= parseFloat(elem.id.substr(0,2))) {
 							if (parseFloat(item.date.substr(11,2)) > parseFloat(elem.id.substr(0,2))) {
-								elem.nextSibling.innerHTML = item.name
+								elem.nextSibling.innerText = item.name
 							}
 						}
 
