@@ -64,7 +64,7 @@ function datesForGrid(year, month) {
 
 	for(let i = 1; i <= firstDay; i++) {
 		let prevMonthDate = totalDaysInPrevMonth - firstDay + i;
-		let key = new Date(state.year, state.month -1, prevMonthDate).toLocaleString();
+		let key = new Date(state.year, state.month -1, prevMonthDate).toLocaleString('en-US');
 		dates.push({key: key, date: prevMonthDate, monthClass:'prev'});
 	}
 
